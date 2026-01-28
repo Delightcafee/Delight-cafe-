@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Delight Cafe</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins', sans-serif;
+}
+
+body{
+  background:#fffaf5;
+  color:#3b2f2f;
+}
+
+header{
+  background:#4b2e2e;
+  color:#fff;
+  padding:15px 40px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  position:sticky;
+  top:0;
+  z-index:1000;
+}
+
+nav a{
+  color:white;
+  text-decoration:none;
+  margin-left:25px;
+  font-size:15px;
+}
+
+nav a:hover{color:#f5c16c;}
+
+.hero{
+  min-height:70vh;
+  background:
+linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)),
+url('hero.jpg');
+  background-size:cover;
+  background-position:center;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  color:white;
+}
+
+.hero h2{font-size:48px;margin-bottom:15px;}
+.hero p{font-size:18px;margin-bottom:25px;}
+
+.btn{
+  background:#f5c16c;
+  padding:12px 28px;
+  border-radius:30px;
+  text-decoration:none;
+  color:#3b2f2f;
+  font-weight:500;
+}
+
+section{padding:60px 40px;}
+
+.section-title{text-align:center;margin-bottom:40px;}
+.section-title h3{font-size:32px;}
+
+.menu{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:25px;
+  max-width:1100px;
+  margin:auto;
+}
+
+.menu-card{
+  background:white;
+  padding:20px;
+  border-radius:15px;
+  box-shadow:0 10px 25px rgba(0,0,0,.08);
+  text-align:center;
+}
+
+.menu-title{cursor:pointer;}
+
+.submenu{
+  display:none;
+  margin-top:10px;
+  font-size:14px;
+}
+
+.add-btn{
+  margin-left:8px;
+  padding:5px 12px;
+  border:none;
+  background:#4b2e2e;
+  color:white;
+  border-radius:20px;
+  cursor:pointer;
+  font-size:12px;
+}
+
+#cart-btn{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:#4b2e2e;
+  color:white;
+  padding:14px 20px;
+  border-radius:30px;
+  cursor:pointer;
+  z-index:2000;
+}
+
+/* CART MODAL */
+#cart-modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  justify-content:center;
+  align-items:center;
+  z-index:3000;
+}
+
+.cart-box{
+  background:white;
+  width:320px;
+  padding:20px;
+  border-radius:15px;
+}
+
+.cart-item{
+  display:flex;
+  justify-content:space-between;
+  margin:8px 0;
+}
+
+.cart-item button{
+  background:none;
+  border:none;
+  font-size:18px;
+  cursor:pointer;
+}
+
+.order-btn{
+  width:100%;
+  background:#4b2e2e;
+  color:white;
+  padding:10px;
+  border:none;
+  border-radius:20px;
+  margin-top:10px;
+  cursor:pointer;
+}
+
+.close-btn{
+  width:100%;
+  margin-top:8px;
+  padding:8px;
+  border:none;
+  border-radius:20px;
+  cursor:pointer;
+}
+
+footer{
+  background:#4b2e2e;
+  color:white;
+  text-align:center;
+  padding:25px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Delight Cafe</h1>
+<nav>
+<a href="#menu">Menu</a>
+<a href="#about">About</a>
+<a href="#contact">Contact</a>
+</nav>
+</header>
+
+<section class="hero">
+<div>
+<h2>Welcome to Delight Cafe</h2>
+<p>Where every cup of coffee feels like comfort.</p>
+<a href="#menu" class="btn">Explore Menu</a>
+</div>
+</section>
+
+<section id="menu">
+<div class="section-title"><h3>Our Menu</h3></div>
+
+<div class="menu">
+
+<div class="menu-card">
+<h4 class="menu-title" onclick="toggleMenu(this)">French Fries ⬇</h4>
+<div class="submenu">
+<p>Plain FF ₹120 <button class="add-btn" onclick="addToCart('Plain FF',120)">Add</button></p>
+<p>Cheese FF ₹150 <button class="add-btn" onclick="addToCart('Cheese FF',150)">Add</button></p>
+<p>Salty FF ₹130 <button class="add-btn" onclick="addToCart('Salty FF',130)">Add</button></p>
+</div>
+</div>
+
+<div class="menu-card">
+<h4>Cold Coffee</h4>
+<p>₹140</p>
+<button class="add-btn" onclick="addToCart('Cold Coffee',140)">Add</button>
+</div>
+
+<div class="menu-card">
+<h4>Momos</h4>
+<p>₹160</p>
+<button class="add-btn" onclick="addToCart('Momos',160)">Add</button>
+</div>
+
+<div class="menu-card">
+<h4 class="menu-title" onclick="toggleMenu(this)">Pizza 🍕 ⬇</h4>
+<div class="submenu">
+<p>Plain ₹120 <button class="add-btn" onclick="addToCart('Plain Pizza',120)">Add</button></p>
+<p>Cheese ₹150 <button class="add-btn" onclick="addToCart('Cheese Pizza',150)">Add</button></p>
+</div>
+</div>
+
+</div>
+</section>
+
+<section id="about">
+<div class="section-title"><h3>About Us</h3></div>
+<p style="text-align:center">Cozy cafe, fresh food, happy people.
+We serve the best food with delicious taste and good vibes 
+ perfect for personal time and and birthday celebration</p>
+</section>
+
+<section id="contact">
+<div class="section-title"><h3>Contact</h3></div>
+<p style="text-align:center">📞 8605463560</p>
+<p style="text-align:center">Delight Cafe Swami Chincholi📍
+<p style="text-align:center">AKASH GUNAWARE AND CO.</p>
+</section>
+
+<footer>© 2022 Delight Cafe | All Rights Reserved</footer>
+
+<!-- CART BUTTON -->
+<div id="cart-btn" onclick="openCart()">🛒 Cart (<span id="cart-count">0</span>)</div>
+
+<!-- CART MODAL -->
+<div id="cart-modal">
+  <div class="cart-box">
+    <h3>Your Cart</h3>
+    <div id="cart-items"></div>
+    <p id="cart-total"></p>
+    <button class="order-btn" onclick="sendWhatsAppOrder()">Place Order</button>
+    <button class="close-btn" onclick="closeCart()">Close</button>
+  </div>
+</div>
+
+<script>
+let cart=[];
+
+function toggleMenu(el){
+  const sub=el.nextElementSibling;
+  sub.style.display=sub.style.display==="block"?"none":"block";
+}
+
+function addToCart(item,price){
+  const found=cart.find(c=>c.item===item);
+  found ? found.qty++ : cart.push({item,price,qty:1});
+  updateCartCount();
+}
+
+function updateCartCount(){
+  document.getElementById("cart-count").innerText=
+  cart.reduce((s,c)=>s+c.qty,0);
+}
+
+function openCart(){
+  document.getElementById("cart-modal").style.display="flex";
+  renderCart();
+}
+
+function closeCart(){
+  document.getElementById("cart-modal").style.display="none";
+}
+
+function renderCart(){
+  const box=document.getElementById("cart-items");
+  box.innerHTML="";
+  let total=0;
+
+  cart.forEach((c,i)=>{
+    total+=c.price*c.qty;
+    box.innerHTML+=`
+      <div class="cart-item">
+        <span>${c.item} x${c.qty}</span>
+        <button onclick="removeItem(${i})">×</button>
+      </div>`;
+  });
+
+  document.getElementById("cart-total").innerText="Total: ₹"+total;
+}
+
+function removeItem(i){
+  cart.splice(i,1);
+  updateCartCount();
+  renderCart();
+}
+
+function sendWhatsAppOrder(){
+  if(cart.length===0){alert("Cart is empty");return;}
+
+  let msg="Hello Delight Cafe,%0AI want to order:%0A";
+  let total=0;
+
+  cart.forEach(c=>{
+    msg+=`• ${c.item} x${c.qty} – ₹${c.price*c.qty}%0A`;
+    total+=c.price*c.qty;
+  });
+
+  msg+=`%0ATotal: ₹${total}`;
+  window.open("https://wa.me/918605463560?text="+msg,"_blank");
+}
+</script>
+
+</body>
+</html>
